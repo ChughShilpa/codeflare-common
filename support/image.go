@@ -32,3 +32,13 @@ func GetImageStream(t Test, namespace string, name string) *imagev1.ImageStream 
 
 	return is
 }
+
+func GetImageRepository(t Test, name string) *imagev1.Image {
+	t.T().Helper()
+
+	image, err := t.Client().Image().ImageV1().Images().Get(t.Ctx(), name, metav1.GetOptions{})
+	t.Expect(err).NotTo(gomega.HaveOccurred())
+
+	//fmt.Print("image is : %s", image.DockerImageReference)
+	return image
+}
